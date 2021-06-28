@@ -239,7 +239,7 @@ class _DetailPageState extends State<DetailPage> {
                                               children: [
                                                 Column(
                                                   children: [
-                                                    Text('Velocidade:',style: descDefaultTextStyle,),
+                                                    Text('Veloc.:',style: descDefaultTextStyle,),
                                                   ],
                                                 ),
                                                 Column(
