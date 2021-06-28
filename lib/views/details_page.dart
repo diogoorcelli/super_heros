@@ -15,19 +15,19 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   RemoteService _remoteService = new RemoteService();
-  var _urlIdHero;
-  var _imgHero;
-  String _nameHero = 'Nome';
-  String _genderHero = 'gênero';
-  String _heightHero = 'altura';
-  String _weightHero = 'peso';
-  String _raceHero = 'raça';
-  int _power = 0;
-  int _intelig = 0;
-  int _strength = 0;
-  int _velocidade = 0;
-  int _resistencia = 0;
-  int _combate = 0;
+  var urlIdHero;
+  var imgHero;
+  String nameHero = 'Nome';
+  String genderHero = 'gênero';
+  String heightHero = 'altura';
+  String weightHero = 'peso';
+  String raceHero = 'raça';
+  int power = 0;
+  int intelig = 0;
+  int strength = 0;
+  int velocidade = 0;
+  int resistencia = 0;
+  int combate = 0;
 
   final nameHeroTextStyle = TextStyle(
     color: Colors.blue,
@@ -60,26 +60,26 @@ class _DetailPageState extends State<DetailPage> {
   Future<Map> searchDetails(String url) async {
     final json = await _remoteService.getDetailHero(url);
     setState(() {
-      _nameHero = json['name'];
-      _genderHero = json['appearance']['gender'];
-      _heightHero = json['appearance']['height'][1];
-      _weightHero = json['appearance']['weight'][1];
-      _raceHero = json['appearance']['race'];
-      _imgHero = json['images']['sm'];
-      _power = json['powerstats']['power'].toInt();
-      _intelig = json['powerstats']['intelligence'].toInt();
-      _strength = json['powerstats']['strength'].toInt();
-      _velocidade = json['powerstats']['speed'].toInt();
-      _resistencia = json['powerstats']['durability'].toInt();
-      _combate = json['powerstats']['combat'].toInt();
+      nameHero = json['name'];
+      genderHero = json['appearance']['gender'];
+      heightHero = json['appearance']['height'][1];
+      weightHero = json['appearance']['weight'][1];
+      raceHero = json['appearance']['race'];
+      imgHero = json['images']['sm'];
+      power = json['powerstats']['power'].toInt();
+      intelig = json['powerstats']['intelligence'].toInt();
+      strength = json['powerstats']['strength'].toInt();
+      velocidade = json['powerstats']['speed'].toInt();
+      resistencia = json['powerstats']['durability'].toInt();
+      combate = json['powerstats']['combat'].toInt();
     });
   }
 
   @override
   void initState() {
-    _urlIdHero = 'https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/id/${widget.idHero}.json';
+    urlIdHero = 'https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/id/${widget.idHero}.json';
     setState(() {
-      searchDetails(_urlIdHero);
+      searchDetails(urlIdHero);
     });
     super.initState();
   }
@@ -119,7 +119,7 @@ class _DetailPageState extends State<DetailPage> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
-                                child: Text(_nameHero.toString(),
+                                child: Text(nameHero.toString(),
                                   style: nameHeroTextStyle,
                                 ),
                               ),
@@ -142,7 +142,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                   Column(
                                     children: [
-                                      Text(_genderHero.toString()),
+                                      Text(genderHero.toString()),
                                     ],
                                   ),
                                   Column(
@@ -152,7 +152,7 @@ class _DetailPageState extends State<DetailPage> {
                                   ),
                                   Column(
                                     children: [
-                                      Text(_raceHero.toString()),
+                                      Text(raceHero.toString()),
                                     ],
                                   ),
                                 ],
@@ -172,7 +172,7 @@ class _DetailPageState extends State<DetailPage> {
                                       ),
                                       Column(
                                         children: [
-                                          Text(_heightHero.toString()),
+                                          Text(heightHero.toString()),
                                         ],
                                       ),
                                       Column(
@@ -182,7 +182,7 @@ class _DetailPageState extends State<DetailPage> {
                                       ),
                                       Column(
                                         children: [
-                                          Text(_weightHero.toString()),
+                                          Text(weightHero.toString()),
                                         ],
                                       ),
                                     ]
@@ -204,7 +204,7 @@ class _DetailPageState extends State<DetailPage> {
                                             ),
                                             Column(
                                               children: [
-                                                Text(_intelig.toString()),
+                                                Text(intelig.toString()),
                                               ],
                                             ),
                                             Column(
@@ -214,7 +214,7 @@ class _DetailPageState extends State<DetailPage> {
                                             ),
                                             Column(
                                               children: [
-                                                Text(_power.toString()),
+                                                Text(power.toString()),
                                               ],
                                             ),
                                             Column(
@@ -224,7 +224,7 @@ class _DetailPageState extends State<DetailPage> {
                                             ),
                                             Column(
                                               children: [
-                                                Text(_strength.toString()),
+                                                Text(strength.toString()),
                                               ],
                                             ),
                                           ]
@@ -244,7 +244,7 @@ class _DetailPageState extends State<DetailPage> {
                                                 ),
                                                 Column(
                                                   children: [
-                                                    Text(_velocidade.toString()),
+                                                    Text(velocidade.toString()),
                                                   ],
                                                 ),
                                                 Column(
@@ -254,7 +254,7 @@ class _DetailPageState extends State<DetailPage> {
                                                 ),
                                                 Column(
                                                   children: [
-                                                    Text(_resistencia.toString()),
+                                                    Text(resistencia.toString()),
                                                   ],
                                                 ),
                                                 Column(
@@ -264,7 +264,7 @@ class _DetailPageState extends State<DetailPage> {
                                                 ),
                                                 Column(
                                                   children: [
-                                                    Text(_combate.toString()),
+                                                    Text(combate.toString()),
                                                   ],
                                                 ),
                                               ]
@@ -314,7 +314,7 @@ class _DetailPageState extends State<DetailPage> {
                     child: CachedNetworkImage(
                       placeholder: (context,url) => CircularProgressIndicator(),
                       errorWidget: (context,url,error) => Icon(Icons.person),
-                      imageUrl: _imgHero,
+                      imageUrl: imgHero,
                       height: 150.0,
                       width: 150.0,
                       fit: BoxFit.cover,

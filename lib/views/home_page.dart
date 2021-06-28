@@ -19,15 +19,15 @@ class _HomePageState extends State<HomePage> {
 
   String _urlAll = 'https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/all.json';
 
-  List _heroList;
-  String _hintMessage = '';
-  String _searchString = '';
-  bool _isSearch = false;
-  int _typeSearch = 1;
-  int _selectedIndex;
-  int _currentPage = 0;
-  int _itemCount;
-  int _randomHero;
+  List heroList;
+  String hintMessage = '';
+  String searchString = '';
+  bool isSearch = false;
+  int typeSearch = 1;
+  int selectedIndex;
+  int currentPage = 0;
+  int itemCount;
+  int randomHero;
 
   List<IconData> data = [
     Icons.all_inclusive_rounded,
@@ -47,18 +47,18 @@ class _HomePageState extends State<HomePage> {
     'Carregando...'
   ];
 
-  void _randomNumberHero() {
+  void randomNumberHero() {
     Random random = new Random();
-    setState(() => _randomHero = random.nextInt(_itemCount)+1);
+    setState(() => randomHero = random.nextInt(itemCount)+1);
   }
 
   @override
   void initState(){
     _pageController.addListener(() {
       int next = _pageController.page.round();
-      if(_currentPage != next){
+      if(currentPage != next){
         setState(() {
-          _currentPage = next;
+          currentPage = next;
         });
       }
     });
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: !_isSearch
+        title: !isSearch
             ? Text(hints[1])
             : TextField(
           style: TextStyle(color: Colors.white),
@@ -88,24 +88,24 @@ class _HomePageState extends State<HomePage> {
             ),
             onChanged: (value) {
               setState(() {
-                _searchString = value;
+                searchString = value;
               });
             }
         ),
 
         actions: <Widget> [
-          _isSearch
+          isSearch
               ? IconButton(
             icon: Icon(Icons.cancel),
             onPressed: () => setState(() {
-              this._typeSearch = 1;
-              this._isSearch = false;
+              this.typeSearch = 1;
+              this.isSearch = false;
             }),
           )
               : IconButton(
             icon: Icon(Icons.search),
             onPressed: () => setState(() {
-              this._isSearch = true;
+              this.isSearch = true;
             }),
           )
         ],
@@ -124,33 +124,33 @@ class _HomePageState extends State<HomePage> {
                        ),
                      );
                    } else {
-                     switch (_typeSearch){
+                     switch (typeSearch){
                        case 1:
-                         _heroList = snapshot.data.toList();
+                         heroList = snapshot.data.toList();
                          break;
                        case 2:
-                         _heroList = snapshot.data.where((i) => i.appearance.gender == 'Male').toList();
+                         heroList = snapshot.data.where((i) => i.appearance.gender == 'Male').toList();
                          break;
                        case 3:
-                         _heroList = snapshot.data.where((i) => i.appearance.gender == 'Female').toList();
+                         heroList = snapshot.data.where((i) => i.appearance.gender == 'Female').toList();
                          break;
                        case 4:
-                         _heroList = snapshot.data.where((i) => i.appearance.gender == '-').toList();
+                         heroList = snapshot.data.where((i) => i.appearance.gender == '-').toList();
                          break;
                      }
-                     if(_isSearch==true){
-                       _heroList = snapshot.data.where((i) => i.name.toLowerCase().contains(_searchString.toLowerCase())).toList();
+                     if(isSearch==true){
+                       heroList = snapshot.data.where((i) => i.name.toLowerCase().contains(searchString.toLowerCase())).toList();
                      }
-                     _itemCount = _heroList.length;
+                     itemCount = heroList.length;
                      return PageView.builder(
-                         itemCount: _itemCount,
+                         itemCount: itemCount,
                          controller: _pageController,
                          itemBuilder: (BuildContext context, int currentIndex) {
-                           bool _activePage = currentIndex == _currentPage;
+                           bool _activePage = currentIndex == currentPage;
                            return SlideTile(
-                             id: _heroList[currentIndex].id,
-                             nome: _heroList[currentIndex].name,
-                             imagem: _heroList[currentIndex].images.md,
+                             id: heroList[currentIndex].id,
+                             nome: heroList[currentIndex].name,
+                             imagem: heroList[currentIndex].images.md,
                              activePage: _activePage,
                            );
                          }
@@ -179,16 +179,16 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: GestureDetector(
                     onTap: () => setState(() {
-                      _hintMessage = hints[i];
-                      _isSearch = false;
-                      _selectedIndex = i;
-                      _typeSearch = _selectedIndex;
-                      showToast(_hintMessage.toString(), duration: Toast.LENGTH_LONG);
-                      if(_typeSearch==0) {
-                        _randomNumberHero();
-                        _pageController.jumpToPage(_randomHero);
-                        _currentPage = _randomHero;
-                        _hintMessage = hints[0];
+                      hintMessage = hints[i];
+                      isSearch = false;
+                      selectedIndex = i;
+                      typeSearch = selectedIndex;
+                      showToast(hintMessage.toString(), duration: Toast.LENGTH_LONG);
+                      if(typeSearch==0) {
+                        randomNumberHero();
+                        _pageController.jumpToPage(randomHero);
+                        currentPage = randomHero;
+                        hintMessage = hints[0];
                       }
                     }),
                     child: AnimatedContainer(
@@ -197,10 +197,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                       width: 35,
                       decoration: BoxDecoration(
-                        border: i == _selectedIndex ? Border(top: BorderSide(
+                        border: i == selectedIndex ? Border(top: BorderSide(
                               width: 3.0, color: Colors.white))
                         :null,
-                      gradient: i == _selectedIndex ? LinearGradient(
+                      gradient: i == selectedIndex ? LinearGradient(
                         colors: [
                           Colors.grey.shade800,
                           Colors.blue
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                       child: Icon(
                         data[i],
                         size: 35,
-                        color: i == _selectedIndex
+                        color: i == selectedIndex
                         ? Colors.white
                         : Colors.grey.shade800,
                       ),
