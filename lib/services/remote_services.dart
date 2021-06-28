@@ -32,7 +32,6 @@ class RemoteService {
         var json = jsonDecode(response.body);
         return json;
       } else {
-        print('Erro ao carregar detalhes');
         return null;
       }
     } catch (e) {

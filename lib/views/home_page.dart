@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     'Personagens masculinos',
     'Personagens femininos',
     'Personagens indefinidos',
-    'Pesquisar por noma',
+    'Pesquisar por nome',
     'Carregando...'
   ];
 

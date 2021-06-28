@@ -58,7 +58,7 @@ class _SlideTileState extends State<SlideTile> {
                     )
                   ]
               ),
-              child: Text(this.widget.nome.toString() ?? Text('Carregando...'),
+              child: Text(this.widget.nome.toString(),
                 style: TextStyle(color: Colors.white, fontSize: 24.0),
               ),
             ),
