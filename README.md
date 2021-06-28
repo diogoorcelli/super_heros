@@ -1,6 +1,6 @@
 # heros
 
-Desafio técnico Heróis
+Desafio técnico SuperHerosAPI utilizando API/Rest
 
 ## Getting Started
 
